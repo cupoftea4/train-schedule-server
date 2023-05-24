@@ -31,7 +31,7 @@ export class RoutesService {
       start = new Date();
       start.setHours(0, 0, 0, 0);
 
-      const end = new Date();
+      end = new Date();
       end.setHours(0, 0, 0, 0);
       end.setDate(end.getDate() + 7);
     } else {
@@ -43,7 +43,6 @@ export class RoutesService {
       end.setDate(end.getDate() + 1);
     }
 
-    
     return omitForeignIds(
         this.routesRepository
           .createQueryBuilder('route')

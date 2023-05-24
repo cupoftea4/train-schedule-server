@@ -9,10 +9,10 @@ import { RoutesModule } from './routes/routes.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'amy',
-      password: '1234',
+      host: process.env.MYSQLHOST || 'localhost',
+      port: +process.env.MYSQLPORT || 3306,
+      username: process.env.MYSQLUSER || 'amy',
+      password: process.env.MYSQLPASSWORD || '1234',
       database: 'train_schedule',
       entities: [__dirname + '/**/*.entity.{js,ts}'],
       synchronize: true,

@@ -43,7 +43,6 @@ export class RoutesService {
       end.setDate(end.getDate() + 1);
     }
 
-    console.log(start, end);
     
     return omitForeignIds(
         this.routesRepository

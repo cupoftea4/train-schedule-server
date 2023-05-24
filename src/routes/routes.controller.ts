@@ -20,8 +20,9 @@ export class RoutesController {
   async findByOriginAndDest(
     @Query('src') source: string,
     @Query('dest') destination: string,
+    @Query('date') date: string,
   ) {
-    return this.routesService.findByOriginAndDest(source, destination);
+    return this.routesService.findByOriginAndDest(source, destination, date);
   }
 
   @Get(':id')

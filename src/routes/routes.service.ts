@@ -25,14 +25,26 @@ export class RoutesService {
       ).getMany()
   }
 
-  findByOriginAndDest(source: string, destination: string) {
-    const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
+  findByOriginAndDest(source: string, destination: string, date: string) {
+    let start: Date, end: Date;
+    if (!date) {
+      start = new Date();
+      start.setHours(0, 0, 0, 0);
 
-    const startOfDayAfter7Days = new Date();
-    startOfDayAfter7Days.setHours(0, 0, 0, 0);
-    startOfDayAfter7Days.setDate(startOfDayAfter7Days.getDate() + 7);
+      const end = new Date();
+      end.setHours(0, 0, 0, 0);
+      end.setDate(end.getDate() + 7);
+    } else {
+      start = new Date(date);
+      start.setHours(0, 0, 0, 0);
 
+      end = new Date(date);
+      end.setHours(0, 0, 0, 0);
+      end.setDate(end.getDate() + 1);
+    }
+
+    console.log(start, end);
+    
     return omitForeignIds(
         this.routesRepository
           .createQueryBuilder('route')
@@ -40,8 +52,8 @@ export class RoutesService {
           .leftJoinAndSelect("route.destinationStation", "destination")
           .where('origin.city = :source', { source })
           .andWhere('destination.city = :destination', { destination })
-          .andWhere('route.departureTime >= :startOfDay', { startOfDay: startOfToday })
-          .andWhere('route.departureTime < :nextDay', { nextDay: startOfDayAfter7Days })
+          .andWhere('route.departureTime >= :start', { start })
+          .andWhere('route.departureTime < :end', { end })
       ).getMany()
   }
 
